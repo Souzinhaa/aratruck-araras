@@ -4,34 +4,35 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aratruck · Borracharia de Veículos Pesados</title>
-  <meta name="description" content="Aratruck - Borracharia especializada em veículos pesados. Pneus Bridgestone, Firestone, Dayton. Recapagem Bandag, alinhamento, balanceamento. Gestão de frotas." />
+  <meta name="description" content="Aratruck - Borracharia especializada em veículos pesados em Araras-SP. Pneus Bridgestone, Firestone, Dayton. Recapagem Bandag certificada, alinhamento, balanceamento e gestão de frotas." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --orange:      #ff6600;
-      --orange-dark: #dd5500;
-      --orange-light: #fff8f0;
-      --black:       #0a0a0a;
-      --gray-100:    #1a1a1a;
-      --gray-200:    #2d2d2d;
-      --gray-300:    #404040;
-      --gray-400:    #595959;
-      --gray-500:    #808080;
-      --white:       #ffffff;
-      --yellow:      #ffc107;
-      --red:         #e74c3c;
-      --shadow-sm:   0 2px 6px rgba(0,0,0,.3);
-      --shadow-md:   0 8px 24px rgba(0,0,0,.4);
-      --shadow-lg:   0 16px 48px rgba(0,0,0,.5);
+      --orange:       #ff6600;
+      --orange-dark:  #cc5200;
+      --orange-glow:  rgba(255,102,0,.18);
+      --black:        #080808;
+      --gray-50:      #111111;
+      --gray-100:     #1a1a1a;
+      --gray-200:     #252525;
+      --gray-300:     #333333;
+      --gray-400:     #555555;
+      --gray-500:     #777777;
+      --gray-600:     #999999;
+      --white:        #ffffff;
+      --shadow-sm:    0 2px 8px rgba(0,0,0,.4);
+      --shadow-md:    0 8px 28px rgba(0,0,0,.55);
+      --shadow-lg:    0 20px 56px rgba(0,0,0,.65);
+      --shadow-orange:0 8px 32px rgba(255,102,0,.3);
       --r-sm: .4rem;
-      --r-md: .8rem;
+      --r-md: .75rem;
       --r-lg: 1.2rem;
-      --r-xl: 2rem;
+      --r-xl: 1.8rem;
     }
 
     html { scroll-behavior: smooth; }
@@ -41,391 +42,600 @@
       color: var(--white);
       overflow-x: hidden;
     }
-    h1, h2, h3, h4 { font-family: 'Work Sans', sans-serif; font-weight: 700; letter-spacing: -.02em; }
+    h1, h2, h3 { font-family: 'Work Sans', sans-serif; font-weight: 800; letter-spacing: -.025em; }
     a { text-decoration: none; color: inherit; }
 
     /* ── SCROLL ANIMATIONS ── */
     .fade-up {
-      opacity: 0;
-      transform: translateY(32px);
-      transition: opacity .7s ease, transform .7s ease;
+      opacity: 0; transform: translateY(36px);
+      transition: opacity .65s cubic-bezier(.16,1,.3,1), transform .65s cubic-bezier(.16,1,.3,1);
     }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
-    .fade-up.d1 { transition-delay: .1s; }
-    .fade-up.d2 { transition-delay: .2s; }
-    .fade-up.d3 { transition-delay: .3s; }
-    .fade-up.d4 { transition-delay: .4s; }
-    .fade-up.d5 { transition-delay: .5s; }
+    .fade-in { opacity: 0; transition: opacity .65s ease; }
+    .fade-in.visible { opacity: 1; }
+    .d1 { transition-delay: .1s; } .d2 { transition-delay: .2s; }
+    .d3 { transition-delay: .3s; } .d4 { transition-delay: .4s; }
+
+    /* ── WHATSAPP FLOAT ── */
+    .wa-float {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+      width: 60px; height: 60px; border-radius: 50%;
+      background: #25d366; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 24px rgba(37,211,102,.5);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .wa-float:hover { transform: scale(1.12); box-shadow: 0 8px 36px rgba(37,211,102,.65); }
+    .wa-float svg { width: 32px; height: 32px; fill: white; }
 
     /* ── NAV ── */
     .nav {
       position: fixed; top: 0; width: 100%; z-index: 100;
-      transition: background .3s, box-shadow .3s;
-      background: rgba(10, 10, 10, .92);
-      backdrop-filter: blur(12px);
+      background: rgba(8,8,8,.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid transparent;
+      transition: border-color .3s, box-shadow .3s;
     }
     .nav.scrolled {
-      background: rgba(10, 10, 10, .96);
-      backdrop-filter: blur(16px);
-      box-shadow: 0 2px 12px rgba(255,102,0,.15);
+      border-color: var(--gray-300);
+      box-shadow: 0 1px 24px rgba(0,0,0,.6);
     }
     .nav-inner {
-      max-width: 1000px; margin: 0 auto; padding: 0 2rem;
-      height: 70px; display: flex; align-items: center; justify-content: space-between;
+      max-width: 1060px; margin: 0 auto; padding: 0 2rem;
+      height: 72px; display: flex; align-items: center; justify-content: space-between;
     }
-    .nav-logo { display: flex; align-items: center; gap: .8rem; }
+    .nav-logo {
+      display: flex; align-items: center; gap: 1rem;
+      text-decoration: none; color: var(--white);
+    }
     .nav-logo-mark {
-      width: 44px; height: 44px; border-radius: 6px;
+      width: 46px; height: 46px; border-radius: 8px;
       background: var(--orange); display: flex; align-items: center; justify-content: center;
-      color: var(--white); font-weight: 700; font-size: 1.2rem;
+      box-shadow: var(--shadow-orange); flex-shrink: 0;
     }
-    .nav-logo .nm  { font-size: 1.15rem; font-weight: 700; color: var(--white); }
-    .nav-logo .sub { font-size: .68rem; text-transform: uppercase; letter-spacing: .08em; color: var(--gray-500); }
+    .nav-logo-mark svg { width: 26px; height: 26px; fill: white; }
+    .nav-logo-text .nm  { font-size: 1.1rem; font-weight: 900; letter-spacing: .04em; line-height: 1; }
+    .nav-logo-text .sub { font-size: .62rem; text-transform: uppercase; letter-spacing: .1em; color: var(--gray-500); margin-top: 2px; }
     .nav-links { display: flex; gap: 2.5rem; }
     .nav-links a {
-      font-size: .88rem; font-weight: 500; color: var(--gray-400);
-      letter-spacing: .01em; transition: color .2s;
-      position: relative;
+      font-size: .86rem; font-weight: 600; color: var(--gray-600);
+      letter-spacing: .02em; transition: color .2s; position: relative; padding-bottom: 4px;
     }
     .nav-links a::after {
-      content: ''; position: absolute; bottom: -6px; left: 0; right: 0;
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
       height: 2px; background: var(--orange); border-radius: 1px;
       transform: scaleX(0); transform-origin: left; transition: transform .25s;
     }
-    .nav-links a:hover { color: var(--orange); }
+    .nav-links a:hover { color: var(--white); }
     .nav-links a:hover::after { transform: scaleX(1); }
     .nav-cta {
-      font-size: .8rem; font-weight: 700; padding: .56rem 1.4rem;
+      font-size: .8rem; font-weight: 800; padding: .6rem 1.5rem;
       background: var(--orange); color: var(--white); border-radius: 6px;
-      transition: all .2s; text-transform: uppercase; letter-spacing: .05em;
+      text-transform: uppercase; letter-spacing: .08em;
+      transition: all .2s; display: flex; align-items: center; gap: .5rem;
     }
-    .nav-cta:hover { background: var(--orange-dark); transform: translateY(-2px); box-shadow: var(--shadow-md); }
-    .nav-burger { display: none; background: none; border: none; cursor: pointer; color: var(--orange); padding: .25rem; }
-    .nav-mobile { display: none; background: rgba(10, 10, 10, .98); border-top: 1px solid var(--gray-200); padding: .8rem 1.5rem; }
+    .nav-cta:hover { background: var(--orange-dark); transform: translateY(-2px); box-shadow: var(--shadow-orange); }
+    .nav-burger { display: none; background: none; border: none; cursor: pointer; color: var(--gray-600); padding: .3rem; }
+    .nav-mobile { display: none; background: var(--gray-50); border-top: 1px solid var(--gray-200); }
     .nav-mobile a {
-      display: block; padding: .7rem 1rem; font-size: .92rem; font-weight: 500;
-      color: var(--gray-400); border-radius: .4rem; transition: all .15s; margin-bottom: .3rem;
+      display: block; padding: .9rem 1.5rem; font-size: .9rem; font-weight: 600;
+      color: var(--gray-600); border-bottom: 1px solid var(--gray-200); transition: all .15s;
     }
-    .nav-mobile a:hover { background: var(--gray-200); color: var(--orange); }
+    .nav-mobile a:hover { color: var(--orange); background: var(--gray-100); }
     .nav-mobile.open { display: block; }
 
     /* ── HERO ── */
     .hero-wrap {
-      background: linear-gradient(145deg, var(--black) 0%, var(--gray-100) 40%, var(--black) 100%);
-      padding: 6.5rem 2rem 4rem;
+      min-height: 100vh; display: flex; align-items: center;
+      padding: 7rem 2rem 4rem;
+      background: var(--black);
       position: relative; overflow: hidden;
     }
+    /* diagonal stripe pattern */
     .hero-wrap::before {
-      content: ''; position: absolute; top: -200px; right: -150px;
-      width: 600px; height: 600px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,102,0,.12) 0%, transparent 60%);
+      content: '';
+      position: absolute; inset: 0;
+      background-image: repeating-linear-gradient(
+        -55deg,
+        transparent, transparent 40px,
+        rgba(255,102,0,.028) 40px, rgba(255,102,0,.028) 41px
+      );
       pointer-events: none;
     }
-    .hero-wrap::after {
-      content: ''; position: absolute; bottom: -100px; left: -100px;
-      width: 400px; height: 400px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,102,0,.08) 0%, transparent 60%);
+    .hero-glow-r {
+      position: absolute; top: -10%; right: -8%;
+      width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,102,0,.14) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-glow-l {
+      position: absolute; bottom: -15%; left: -10%;
+      width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,102,0,.07) 0%, transparent 65%);
       pointer-events: none;
     }
     .hero-grid {
-      max-width: 1000px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 4rem; align-items: center;
+      max-width: 1060px; margin: 0 auto; width: 100%;
+      display: grid; grid-template-columns: 1.05fr 1fr;
+      gap: 5rem; align-items: center; position: relative;
     }
 
-    /* hero text */
-    .badge {
+    .eyebrow {
       display: inline-flex; align-items: center; gap: .5rem;
-      font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-      color: var(--orange); background: rgba(255,102,0,.15);
-      padding: .4rem 1rem; border-radius: 6px; margin-bottom: 1rem;
-      border: 1px solid rgba(255,102,0,.3);
+      font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--orange); background: rgba(255,102,0,.12);
+      padding: .45rem 1.1rem; border-radius: 6px; margin-bottom: 1.4rem;
+      border: 1px solid rgba(255,102,0,.28);
     }
+    .eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); animation: blink 1.8s ease infinite; }
+    @keyframes blink { 0%,100% { opacity:1 } 50% { opacity:.3 } }
+
     .hero-title {
-      font-size: clamp(2.2rem, 6vw, 3.5rem); font-weight: 700; line-height: 1.15;
-      color: var(--white); margin-bottom: 1.3rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(3rem, 7.5vw, 5.2rem); font-weight: 900; line-height: 1.02;
+      text-transform: uppercase; letter-spacing: .01em;
+      color: var(--white); margin-bottom: 1.5rem;
     }
-    .hero-title .hl { color: var(--orange); }
-    .hero-desc  {
-      font-size: 1rem; color: var(--gray-400); font-weight: 400; line-height: 1.8;
-      margin-bottom: 1.8rem;
+    .hero-title .hl {
+      color: var(--orange);
+      -webkit-text-stroke: 0;
     }
-    .hero-pills { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 2rem; }
+    .hero-title .outline {
+      -webkit-text-stroke: 2px var(--white);
+      color: transparent;
+    }
+    .hero-desc {
+      font-size: .98rem; color: var(--gray-600); font-weight: 400; line-height: 1.8;
+      margin-bottom: 2rem; max-width: 440px;
+    }
+    .hero-pills { display: flex; flex-wrap: wrap; gap: .55rem; margin-bottom: 2.2rem; }
     .pill {
       display: inline-flex; align-items: center; gap: .4rem;
-      font-size: .75rem; font-weight: 600; color: var(--white);
-      background: var(--gray-200); border: 1px solid var(--gray-300);
-      padding: .4rem .9rem; border-radius: 6px; box-shadow: var(--shadow-sm);
-      text-transform: uppercase; letter-spacing: .05em;
+      font-size: .72rem; font-weight: 700; color: var(--gray-600);
+      background: var(--gray-100); border: 1px solid var(--gray-300);
+      padding: .4rem .9rem; border-radius: 4px;
+      text-transform: uppercase; letter-spacing: .06em;
     }
-    .pill-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--orange); flex-shrink: 0; }
+    .pill-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); flex-shrink: 0; }
 
-    .hero-btns { display: flex; flex-direction: column; gap: .8rem; }
+    .hero-btns { display: flex; flex-wrap: wrap; gap: .9rem; }
     .btn {
       display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
-      padding: 1rem 2rem; border-radius: 8px;
-      font-weight: 700; font-size: .9rem; font-family: 'Work Sans', sans-serif;
-      border: none; cursor: pointer; letter-spacing: .05em; text-transform: uppercase;
-      transition: all .2s;
+      padding: 1rem 2rem; border-radius: 7px;
+      font-weight: 800; font-size: .88rem; font-family: 'Work Sans', sans-serif;
+      border: none; cursor: pointer; letter-spacing: .07em; text-transform: uppercase;
+      transition: all .22s; line-height: 1;
     }
-    .btn:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-    .btn-primary    { background: var(--orange); color: var(--white); }
-    .btn-primary:hover { background: var(--orange-dark); }
-    .btn-secondary  { background: var(--gray-200); color: var(--white); border: 1.5px solid var(--gray-300); }
-    .btn-secondary:hover { background: var(--gray-300); border-color: var(--orange); }
-    .btn-outline    { background: transparent; color: var(--orange); border: 2px solid var(--orange); }
-    .btn-outline:hover { background: rgba(255,102,0,.1); }
+    .btn-primary { background: var(--orange); color: var(--white); }
+    .btn-primary:hover { background: var(--orange-dark); transform: translateY(-3px); box-shadow: var(--shadow-orange); }
+    .btn-ghost { background: transparent; color: var(--white); border: 2px solid var(--gray-300); }
+    .btn-ghost:hover { border-color: var(--orange); color: var(--orange); transform: translateY(-3px); }
+    .btn-wa { background: #25d366; color: var(--white); }
+    .btn-wa:hover { background: #1eb858; transform: translateY(-3px); box-shadow: 0 8px 28px rgba(37,211,102,.35); }
+    .btn-call { background: var(--gray-200); color: var(--white); border: 2px solid var(--gray-300); }
+    .btn-call:hover { border-color: var(--orange); transform: translateY(-3px); }
 
     /* ── CAROUSEL ── */
     .carousel-wrap {
       position: relative; border-radius: var(--r-xl);
-      overflow: hidden; aspect-ratio: 2/3;
-      box-shadow: 0 32px 64px rgba(0,0,0,.6);
-      border: 3px solid var(--orange);
+      overflow: hidden; aspect-ratio: 3/4;
+      box-shadow: 0 40px 80px rgba(0,0,0,.75), 0 0 0 3px var(--orange);
     }
     .carousel { position: relative; width: 100%; height: 100%; overflow: hidden; cursor: grab; }
     .carousel:active { cursor: grabbing; }
-    .carousel-track {
-      display: flex; height: 100%;
-      transition: transform .8s cubic-bezier(.25,.1,.25,1);
-    }
+    .carousel-track { display: flex; height: 100%; transition: transform .85s cubic-bezier(.25,.1,.25,1); }
     .carousel-slide { min-width: 100%; height: 100%; overflow: hidden; position: relative; }
     .carousel-slide::after {
       content: ''; position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(0,0,0,.3) 0%, transparent 60%);
+      background: linear-gradient(180deg, rgba(0,0,0,.1) 0%, rgba(0,0,0,.5) 100%);
       pointer-events: none;
     }
     .carousel-slide img {
       width: 100%; height: 100%; object-fit: cover; object-position: center;
-      display: block; transition: transform 8s ease;
+      display: block; transition: transform 9s ease;
     }
-    .carousel-slide.active img { transform: scale(1.08); }
+    .carousel-slide.active img { transform: scale(1.07); }
 
     .carousel-btn {
       position: absolute; top: 50%; transform: translateY(-50%);
-      width: 44px; height: 44px; border-radius: 6px;
-      background: rgba(255,255,255,.95); border: none; cursor: pointer;
+      width: 44px; height: 44px; border-radius: 8px;
+      background: rgba(8,8,8,.82); border: 1.5px solid rgba(255,255,255,.15); cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      color: var(--orange); box-shadow: var(--shadow-md);
-      transition: all .25s; z-index: 2; font-weight: 700;
+      color: var(--white); box-shadow: var(--shadow-md); transition: all .25s; z-index: 2;
     }
-    .carousel-btn:hover { background: var(--white); transform: translateY(-50%) scale(1.15); }
-    .c-prev { left: 1rem; }
-    .c-next { right: 1rem; }
+    .carousel-btn:hover { background: var(--orange); border-color: var(--orange); transform: translateY(-50%) scale(1.08); }
+    .c-prev { left: .9rem; } .c-next { right: .9rem; }
 
     .carousel-dots {
       position: absolute; bottom: 1.2rem; left: 50%; transform: translateX(-50%);
-      display: flex; gap: .6rem; z-index: 2;
+      display: flex; gap: .55rem; z-index: 2;
     }
     .dot {
       width: 8px; height: 8px; border-radius: 2px; border: none; padding: 0;
-      background: rgba(255,255,255,.4); cursor: pointer;
-      transition: all .4s ease;
+      background: rgba(255,255,255,.3); cursor: pointer; transition: all .4s ease;
     }
     .dot.active { width: 28px; background: var(--orange); }
 
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background: var(--gray-50);
+      border-top: 1px solid var(--gray-200);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 2.5rem 2rem;
+    }
+    .stats-inner {
+      max-width: 1060px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+    .stat-item { text-align: center; padding: .8rem; }
+    .stat-item + .stat-item {
+      border-left: 1px solid var(--gray-200);
+    }
+    .stat-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(2.4rem, 5vw, 3.4rem); font-weight: 900;
+      color: var(--orange); line-height: 1; letter-spacing: .01em;
+    }
+    .stat-label { font-size: .8rem; font-weight: 600; color: var(--gray-500); text-transform: uppercase; letter-spacing: .08em; margin-top: .5rem; }
+
     /* ── SECTION WRAPPER ── */
-    .sw-dark { background: var(--black); }
-    .sw-gray { background: var(--gray-100); }
-    .section { padding: 4.5rem 2rem; max-width: 1000px; margin: 0 auto; }
+    .sw-black { background: var(--black); }
+    .sw-dark  { background: var(--gray-50); }
+    .sw-gray  { background: var(--gray-100); }
+    .section  { padding: 5rem 2rem; max-width: 1060px; margin: 0 auto; }
 
-    .sec-head { margin-bottom: 2.5rem; }
-    .sec-head .badge { margin-bottom: 1rem; }
-    .sec-head h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); color: var(--white); line-height: 1.2; margin-bottom: .6rem; }
-    .sec-head p  { font-size: .95rem; color: var(--gray-400); line-height: 1.7; max-width: 580px; }
-
-    /* ── BENEFITS ── */
-    .benefit-list { display: flex; flex-direction: column; gap: 1rem; }
-    .benefit-card {
-      display: flex; align-items: flex-start; gap: 1.2rem;
-      background: var(--gray-200); border: 1px solid var(--gray-300);
-      border-radius: var(--r-md); padding: 1.5rem;
-      transition: all .25s;
-      box-shadow: var(--shadow-sm);
-    }
-    .benefit-card:hover { border-color: var(--orange); background: var(--gray-100); transform: translateX(4px); }
-    .b-icon {
-      width: 50px; height: 50px; border-radius: 8px; flex-shrink: 0;
-      background: rgba(255,102,0,.2); display: flex; align-items: center; justify-content: center;
-      color: var(--orange); font-size: 1.6rem;
-    }
-    .benefit-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: .3rem; color: var(--white); }
-    .benefit-card p  { font-size: .88rem; color: var(--gray-400); line-height: 1.6; }
+    .sec-head { margin-bottom: 3rem; }
+    .sec-head h2 { font-size: clamp(2rem, 4.5vw, 3rem); color: var(--white); line-height: 1.1; margin-bottom: .7rem; margin-top: .8rem; }
+    .sec-head p  { font-size: .95rem; color: var(--gray-500); line-height: 1.75; max-width: 560px; }
 
     /* ── SERVICES ── */
     .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
     .service-card {
-      background: var(--gray-200); border: 2px solid transparent;
-      border-radius: var(--r-md); padding: 1.6rem;
-      display: flex; flex-direction: column; gap: .8rem;
-      transition: all .3s;
-      box-shadow: var(--shadow-sm);
+      background: var(--gray-100); border: 1px solid var(--gray-200);
+      border-top: 3px solid transparent;
+      border-radius: var(--r-md); padding: 2rem;
+      display: flex; flex-direction: column; gap: 1rem;
+      transition: all .3s; box-shadow: var(--shadow-sm);
+      position: relative; overflow: hidden;
     }
-    .service-card:hover {
-      border-color: var(--orange); background: var(--gray-100);
-      transform: translateY(-6px); box-shadow: var(--shadow-lg);
+    .service-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--orange); transform: scaleX(0); transform-origin: left;
+      transition: transform .35s ease;
     }
-    .s-icon { font-size: 2.4rem; line-height: 1; }
-    .service-card h3 { font-size: 1rem; font-weight: 700; color: var(--white); }
-    .service-card p  { font-size: .85rem; color: var(--gray-400); line-height: 1.6; }
+    .service-card:hover { border-color: var(--gray-300); background: var(--gray-200); transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .s-icon-wrap {
+      width: 56px; height: 56px; border-radius: 10px;
+      background: rgba(255,102,0,.15); display: flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(255,102,0,.25); font-size: 1.8rem;
+    }
+    .service-card h3 { font-size: 1.05rem; font-weight: 800; color: var(--white); }
+    .service-card p  { font-size: .87rem; color: var(--gray-500); line-height: 1.7; flex-grow: 1; }
+    .service-tag {
+      display: inline-block; font-size: .65rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--orange); background: rgba(255,102,0,.1);
+      border: 1px solid rgba(255,102,0,.2); padding: .2rem .7rem; border-radius: 4px;
+      align-self: flex-start;
+    }
 
-    /* ── FEATURES BOX ── */
-    .features-box {
-      background: linear-gradient(135deg, rgba(255,102,0,.1) 0%, rgba(255,102,0,.05) 100%);
-      border: 2px solid var(--orange);
-      border-radius: var(--r-xl); padding: 2.5rem;
+    /* ── BENEFITS ── */
+    .benefits-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+    .benefit-card {
+      display: flex; align-items: flex-start; gap: 1.2rem;
+      background: var(--gray-200); border: 1px solid var(--gray-300);
+      border-radius: var(--r-md); padding: 1.6rem;
+      transition: all .25s; box-shadow: var(--shadow-sm);
     }
-    .features-box h2 { font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: .6rem; }
-    .features-box .qt {
-      font-size: .95rem; color: var(--gray-400); font-style: italic; font-weight: 400;
-      margin-bottom: 2rem; line-height: 1.75;
-      border-left: 4px solid var(--orange); padding-left: 1.2rem;
+    .benefit-card:hover { border-color: var(--orange); transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .b-icon {
+      width: 52px; height: 52px; border-radius: 10px; flex-shrink: 0;
+      background: rgba(255,102,0,.15); display: flex; align-items: center; justify-content: center;
+      color: var(--orange); font-size: 1.5rem; border: 1px solid rgba(255,102,0,.2);
     }
-    .features-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
-    .features-cols h3 {
-      font-size: .95rem; font-weight: 700; margin-bottom: 1rem;
-      color: var(--orange); letter-spacing: .05em; text-transform: uppercase;
+    .benefit-card h3 { font-size: .95rem; font-weight: 800; margin-bottom: .35rem; color: var(--white); }
+    .benefit-card p  { font-size: .85rem; color: var(--gray-500); line-height: 1.65; }
+
+    /* ── BRANDS ── */
+    .brands-bar {
+      background: var(--gray-50); padding: 2.2rem 2rem;
+      border-top: 1px solid var(--gray-200); border-bottom: 1px solid var(--gray-200);
     }
-    .feat-item { display: flex; align-items: flex-start; gap: .8rem; margin-bottom: .9rem; }
-    .feat-mark  { font-size: 1.2rem; color: var(--orange); font-weight: 700; min-width: 1.5rem; }
-    .feat-item p { font-size: .88rem; color: var(--gray-400); line-height: 1.6; padding-top: .05rem; }
+    .brands-inner { max-width: 1060px; margin: 0 auto; }
+    .brands-label {
+      font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--gray-500); margin-bottom: 1.4rem; display: block;
+    }
+    .brands-list { display: flex; align-items: center; gap: 3rem; flex-wrap: wrap; }
+    .brand-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.6rem; font-weight: 900; letter-spacing: .05em;
+      color: var(--gray-400); text-transform: uppercase;
+      transition: color .2s; cursor: default;
+    }
+    .brand-name:hover { color: var(--white); }
+    .brand-divider { width: 1px; height: 28px; background: var(--gray-300); }
+    .brand-cert {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--orange); background: rgba(255,102,0,.1);
+      border: 1px solid rgba(255,102,0,.25); padding: .4rem .9rem; border-radius: 4px;
+    }
+
+    /* ── DIFERENCIAIS BOX ── */
+    .diff-box {
+      background: var(--gray-100); border: 1px solid var(--gray-200);
+      border-radius: var(--r-xl); overflow: hidden;
+    }
+    .diff-box-header {
+      background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
+      padding: 2.2rem 2.5rem; position: relative; overflow: hidden;
+    }
+    .diff-box-header::after {
+      content: ''; position: absolute; top: -40px; right: -40px;
+      width: 180px; height: 180px; border-radius: 50%;
+      background: rgba(255,255,255,.08); pointer-events: none;
+    }
+    .diff-box-header h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: .6rem; }
+    .diff-box-header p  { font-size: .92rem; color: rgba(255,255,255,.8); line-height: 1.7; font-style: italic; }
+    .diff-body { padding: 2.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .diff-col h3 {
+      font-size: .78rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 1.4rem; padding-bottom: .8rem;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .diff-item {
+      display: flex; align-items: flex-start; gap: .85rem; margin-bottom: 1rem;
+    }
+    .diff-icon {
+      width: 28px; height: 28px; border-radius: 4px; flex-shrink: 0;
+      background: rgba(255,102,0,.15); display: flex; align-items: center; justify-content: center;
+      margin-top: .1rem;
+    }
+    .diff-icon svg { width: 14px; height: 14px; stroke: var(--orange); fill: none; }
+    .diff-item p { font-size: .88rem; color: var(--gray-500); line-height: 1.6; }
+
+    /* ── HOURS SECTION ── */
+    .hours-wrap {
+      background: var(--gray-50); padding: 4rem 2rem;
+      border-top: 1px solid var(--gray-200);
+    }
+    .hours-inner {
+      max-width: 1060px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+    }
+    .hours-title { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: .6rem; }
+    .hours-sub { font-size: .9rem; color: var(--gray-500); line-height: 1.7; margin-bottom: 2rem; }
+    .hours-table { width: 100%; border-collapse: collapse; }
+    .hours-table tr { border-bottom: 1px solid var(--gray-200); }
+    .hours-table tr:last-child { border-bottom: none; }
+    .hours-table td {
+      padding: .85rem 0; font-size: .9rem; color: var(--gray-500); vertical-align: middle;
+    }
+    .hours-table td:first-child { font-weight: 700; color: var(--white); padding-right: 1.5rem; }
+    .hours-table td:last-child { text-align: right; }
+    .hours-open  { color: #4caf50; font-weight: 700; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; }
+    .hours-closed { color: var(--gray-400); font-weight: 600; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; }
+    .location-card {
+      background: var(--gray-100); border: 1px solid var(--gray-200);
+      border-radius: var(--r-lg); padding: 1.8rem;
+    }
+    .location-card h3 { font-size: 1rem; font-weight: 800; margin-bottom: 1.2rem; color: var(--white); }
+    .loc-item { display: flex; align-items: flex-start; gap: .85rem; margin-bottom: 1rem; }
+    .loc-item svg { color: var(--orange); stroke: var(--orange); flex-shrink: 0; margin-top: .1rem; }
+    .loc-item p { font-size: .88rem; color: var(--gray-500); line-height: 1.6; }
+    .loc-item strong { color: var(--white); }
+    .maps-btn {
+      display: inline-flex; align-items: center; gap: .6rem;
+      margin-top: 1.2rem; font-size: .8rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .08em; color: var(--orange);
+      background: rgba(255,102,0,.1); border: 1px solid rgba(255,102,0,.25);
+      padding: .6rem 1.2rem; border-radius: 6px; transition: all .2s;
+    }
+    .maps-btn:hover { background: rgba(255,102,0,.2); transform: translateY(-2px); }
 
     /* ── CTA ── */
     .cta-wrap {
-      background: linear-gradient(135deg, var(--gray-100) 0%, var(--gray-200) 100%);
-      padding: 5rem 2rem; text-align: center;
+      background: var(--orange);
+      padding: 5.5rem 2rem; text-align: center;
       position: relative; overflow: hidden;
     }
     .cta-wrap::before {
-      content: ''; position: absolute; top: -150px; right: -150px;
-      width: 500px; height: 500px; border-radius: 50%;
-      background: rgba(255,102,0,.1); pointer-events: none;
+      content: '';
+      position: absolute; inset: 0;
+      background-image: repeating-linear-gradient(
+        -55deg,
+        transparent, transparent 40px,
+        rgba(0,0,0,.07) 40px, rgba(0,0,0,.07) 41px
+      );
+      pointer-events: none;
     }
     .cta-wrap::after {
-      content: ''; position: absolute; bottom: -120px; left: -120px;
-      width: 400px; height: 400px; border-radius: 50%;
-      background: rgba(255,102,0,.08); pointer-events: none;
+      content: ''; position: absolute; top: -80px; right: -80px;
+      width: 340px; height: 340px; border-radius: 50%;
+      background: rgba(0,0,0,.08); pointer-events: none;
     }
-    .cta-inner { max-width: 520px; margin: 0 auto; position: relative; }
-    .cta-wrap h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); color: var(--white); margin-bottom: .8rem; }
-    .cta-wrap p  { font-size: .98rem; color: var(--gray-400); line-height: 1.8; margin-bottom: 2.2rem; }
-    .cta-btns { display: flex; flex-direction: column; gap: .8rem; }
+    .cta-inner { max-width: 560px; margin: 0 auto; position: relative; }
+    .cta-wrap h2 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 900; text-transform: uppercase; color: var(--white); margin-bottom: .8rem; line-height: 1.05; }
+    .cta-wrap p  { font-size: 1rem; color: rgba(255,255,255,.85); line-height: 1.75; margin-bottom: 2.5rem; }
+    .cta-btns { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
 
     /* ── FOOTER ── */
     .footer {
       background: var(--black); color: var(--white);
-      padding: 3rem 2rem 2rem; text-align: center; border-top: 2px solid var(--gray-200);
+      border-top: 1px solid var(--gray-200);
     }
-    .footer h3  { font-size: 1.2rem; font-weight: 700; margin-bottom: .3rem; }
-    .footer .sp { font-size: .85rem; color: var(--orange); font-weight: 600; }
-    .footer .cr { font-size: .8rem; color: var(--gray-500); margin-top: .2rem; }
-    .footer-divider { height: 1px; background: var(--gray-200); margin: 1.5rem auto; max-width: 240px; }
-    .footer .cp { font-size: .8rem; color: var(--gray-500); line-height: 2; }
+    .footer-inner {
+      max-width: 1060px; margin: 0 auto; padding: 3.5rem 2rem 2.5rem;
+      display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 3rem;
+    }
+    .footer-brand .logo-row { display: flex; align-items: center; gap: .8rem; margin-bottom: 1rem; }
+    .footer-brand .logo-mark {
+      width: 42px; height: 42px; border-radius: 7px; background: var(--orange);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .footer-brand .logo-mark svg { width: 24px; height: 24px; fill: white; }
+    .footer-brand .nm  { font-size: 1rem; font-weight: 900; letter-spacing: .05em; }
+    .footer-brand .sub { font-size: .62rem; text-transform: uppercase; letter-spacing: .1em; color: var(--gray-500); }
+    .footer-brand p { font-size: .85rem; color: var(--gray-500); line-height: 1.75; max-width: 260px; }
+    .footer-col h4 { font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); margin-bottom: 1.2rem; }
+    .footer-col li { list-style: none; margin-bottom: .65rem; }
+    .footer-col a { font-size: .87rem; color: var(--gray-500); transition: color .2s; }
+    .footer-col a:hover { color: var(--white); }
+    .footer-col p { font-size: .87rem; color: var(--gray-500); line-height: 1.7; }
+    .footer-bottom {
+      border-top: 1px solid var(--gray-200); padding: 1.4rem 2rem;
+      text-align: center; font-size: .78rem; color: var(--gray-500);
+    }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 720px) {
+    @media (max-width: 760px) {
       .nav-links, .nav-cta { display: none; }
       .nav-burger { display: block; }
-      .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
       .carousel-order { order: -1; }
+      .carousel-wrap { aspect-ratio: 4/3; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .stat-item + .stat-item { border-left: none; }
+      .stat-item:nth-child(odd) { border-right: 1px solid var(--gray-200); }
       .services-grid { grid-template-columns: 1fr; }
-      .features-cols { grid-template-columns: 1fr; gap: 2rem; }
-      .hero-btns { align-items: stretch; }
-      .cta-btns { flex-direction: column; }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .diff-body { grid-template-columns: 1fr; gap: 2rem; }
+      .hours-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .hero-btns { flex-direction: column; }
+      .cta-btns { flex-direction: column; align-items: center; }
     }
-    @media (min-width: 721px) {
-      .hero-btns { flex-direction: row; }
-      .cta-btns { flex-direction: row; justify-content: center; gap: 1rem; }
+    @media (max-width: 480px) {
+      .stats-inner { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
 <body>
 
+<!-- WhatsApp Float -->
+<a class="wa-float" href="https://wa.me/SEUWHATSAPP" target="_blank" rel="noopener" aria-label="Chamar no WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.004 2C6.477 2 2 6.478 2 12.004c0 1.762.47 3.471 1.362 4.966L2 22l5.187-1.334A9.956 9.956 0 0 0 12.004 22C17.53 22 22 17.521 22 12.004 22 6.478 17.53 2 12.004 2z"/>
+  </svg>
+</a>
+
 <!-- NAV -->
-<nav class="nav" id="nav">
+<nav class="nav" id="nav" role="navigation" aria-label="Navegação principal">
   <div class="nav-inner">
-    <div class="nav-logo">
-      <div class="nav-logo-mark">⚙</div>
-      <div>
+    <a class="nav-logo" href="#início" aria-label="Aratruck - Ir para o início">
+      <div class="nav-logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 24" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="8" width="22" height="12" rx="2" fill="white"/>
+          <path d="M23 12h5l3 5v3h-8V12z" fill="white"/>
+          <circle cx="8"  cy="22" r="3" fill="#cc5200"/>
+          <circle cx="18" cy="22" r="3" fill="#cc5200"/>
+          <circle cx="28" cy="22" r="3" fill="#cc5200"/>
+          <rect x="3" y="4" width="12" height="8" rx="1" fill="rgba(255,255,255,.5)"/>
+        </svg>
+      </div>
+      <div class="nav-logo-text">
         <div class="nm">ARATRUCK</div>
         <div class="sub">Borracharia Pesada</div>
       </div>
-    </div>
+    </a>
     <div class="nav-links">
       <a href="#início">Início</a>
       <a href="#serviços">Serviços</a>
       <a href="#diferenciais">Diferenciais</a>
       <a href="#contato">Contato</a>
     </div>
-    <a href="https://wa.me/SEUWHATSAPP" target="_blank" rel="noopener" class="nav-cta">Orçamento</a>
-    <button class="nav-burger" id="burger" aria-label="Menu">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <a href="https://wa.me/SEUWHATSAPP" target="_blank" rel="noopener" class="nav-cta" aria-label="Solicitar orçamento via WhatsApp">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.004 2C6.477 2 2 6.478 2 12.004c0 1.762.47 3.471 1.362 4.966L2 22l5.187-1.334A9.956 9.956 0 0 0 12.004 22C17.53 22 22 17.521 22 12.004 22 6.478 17.53 2 12.004 2z"/>
+      </svg>
+      Orçamento
+    </a>
+    <button class="nav-burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
         <path d="M4 6h16M4 12h16M4 18h16"/>
       </svg>
     </button>
   </div>
-  <div class="nav-mobile" id="mobile-menu">
-    <a href="#início"      onclick="closeMenu()">Início</a>
-    <a href="#serviços"    onclick="closeMenu()">Serviços</a>
-    <a href="#diferenciais" onclick="closeMenu()">Diferenciais</a>
-    <a href="#contato"     onclick="closeMenu()">Contato</a>
+  <div class="nav-mobile" id="mobile-menu" role="menu">
+    <a href="#início"       onclick="closeMenu()" role="menuitem">Início</a>
+    <a href="#serviços"     onclick="closeMenu()" role="menuitem">Serviços</a>
+    <a href="#diferenciais" onclick="closeMenu()" role="menuitem">Diferenciais</a>
+    <a href="#contato"      onclick="closeMenu()" role="menuitem">Contato</a>
+    <a href="https://wa.me/SEUWHATSAPP" target="_blank" rel="noopener" role="menuitem" style="color: var(--orange);">Solicitar Orçamento</a>
   </div>
 </nav>
 
 <!-- HERO -->
-<section id="início">
+<main>
+<section id="início" aria-label="Apresentação Aratruck">
   <div class="hero-wrap">
+    <div class="hero-glow-r" aria-hidden="true"></div>
+    <div class="hero-glow-l" aria-hidden="true"></div>
     <div class="hero-grid">
 
       <!-- Text column -->
       <div>
-        <span class="badge">🚛 Especializada em Pesados</span>
-
-        <h1 class="hero-title">
-          Sua frota <span class="hl">merece o melhor</span>.
-        </h1>
-
-        <p class="hero-desc">
-          Pneus premium, recapagem certificada e serviços completos de borracharia para caminhões, carretas e máquinas. Suporte 24h, eficiência comprovada.
-        </p>
-
-        <div class="hero-pills">
-          <span class="pill"><span class="pill-dot"></span>Atendimento 24h</span>
-          <span class="pill"><span class="pill-dot"></span>Estoque permanente</span>
-          <span class="pill"><span class="pill-dot"></span>Serviços integrados</span>
+        <div class="eyebrow fade-in">
+          <span class="eyebrow-dot" aria-hidden="true"></span>
+          Araras · SP · Desde 2010
         </div>
 
-        <div class="hero-btns">
-          <a href="https://wa.me/SEUWHATSAPP" target="_blank" rel="noopener" class="btn btn-primary">
-            Solicitar Orçamento
+        <h1 class="hero-title fade-up">
+          Pneus.<br>
+          <span class="hl">Potência.</span><br>
+          <span class="outline">Confiança.</span>
+        </h1>
+
+        <p class="hero-desc fade-up d1">
+          Borracharia especializada em veículos pesados. Pneus premium, recapagem Bandag certificada e serviços completos para sua frota não parar.
+        </p>
+
+        <div class="hero-pills fade-up d2">
+          <span class="pill"><span class="pill-dot" aria-hidden="true"></span>Seg–Sex 08–17h</span>
+          <span class="pill"><span class="pill-dot" aria-hidden="true"></span>Sáb 08–11h</span>
+          <span class="pill"><span class="pill-dot" aria-hidden="true"></span>Araras–SP</span>
+        </div>
+
+        <div class="hero-btns fade-up d3">
+          <a href="https://wa.me/SEUWHATSAPP" target="_blank" rel="noopener" class="btn btn-wa" aria-label="Solicitar orçamento pelo WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.004 2C6.477 2 2 6.478 2 12.004c0 1.762.47 3.471 1.362 4.966L2 22l5.187-1.334A9.956 9.956 0 0 0 12.004 22C17.53 22 22 17.521 22 12.004 22 6.478 17.53 2 12.004 2z"/>
+            </svg>
+            WhatsApp
           </a>
-          <a href="#serviços" class="btn btn-secondary">Conheça nossos serviços</a>
+          <a href="#serviços" class="btn btn-ghost">Ver Serviços</a>
         </div>
       </div>
 
-      <!-- Carousel column -->
-      <div class="carousel-order">
+      <!-- Carousel -->
+      <div class="carousel-order fade-in d2">
         <div class="carousel-wrap">
-          <div class="carousel" id="carousel">
+          <div class="carousel" id="carousel" role="region" aria-label="Fotos da Aratruck" aria-live="polite">
             <div class="carousel-track" id="carousel-track">
               <div class="carousel-slide active">
-                <img src="public/assets/01.webp" alt="Aratruck - Fachada" loading="eager" />
+                <img src="public/assets/01.webp" alt="Fachada da Aratruck em Araras-SP" loading="eager" />
               </div>
               <div class="carousel-slide">
-                <img src="public/assets/02.webp" alt="Serviços de Borracharia" loading="lazy" />
+                <img src="public/assets/02.webp" alt="Estrutura e equipamentos Aratruck" loading="lazy" />
               </div>
               <div class="carousel-slide">
-                <img src="public/assets/03.webp" alt="Atendimento Especializado" loading="lazy" />
+                <img src="public/assets/03.webp" alt="Atendimento especializado em veículos pesados" loading="lazy" />
               </div>
             </div>
 
-            <button class="carousel-btn c-prev" id="c-prev" aria-label="Foto anterior">←</button>
-            <button class="carousel-btn c-next" id="c-next" aria-label="Próxima foto">→</button>
+            <button class="carousel-btn c-prev" id="c-prev" aria-label="Foto anterior">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <button class="carousel-btn c-next" id="c-next" aria-label="Próxima foto">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
 
-            <div class="carousel-dots" id="dots">
-              <button class="dot active" data-idx="0" aria-label="Foto 1"></button>
-              <button class="dot" data-idx="1" aria-label="Foto 2"></button>
-              <button class="dot" data-idx="2" aria-label="Foto 3"></button>
+            <div class="carousel-dots" id="dots" role="tablist" aria-label="Selecionar foto">
+              <button class="dot active" data-idx="0" aria-label="Foto 1" role="tab" aria-selected="true"></button>
+              <button class="dot" data-idx="1" aria-label="Foto 2" role="tab" aria-selected="false"></button>
+              <button class="dot" data-idx="2" aria-label="Foto 3" role="tab" aria-selected="false"></button>
             </div>
           </div>
         </div>
@@ -435,138 +645,336 @@
   </div>
 </section>
 
-<!-- BENEFÍCIOS -->
-<div class="sw-gray">
-  <section id="benefícios" class="section">
-    <div class="sec-head fade-up">
-      <span class="badge">Por que escolher Aratruck</span>
-      <h2>Seu caminhão sempre pronto para a estrada</h2>
-      <p>Experiência, qualidade e confiabilidade. Tudo que sua frota precisa.</p>
+<!-- STATS -->
+<div class="stats-bar" aria-label="Números Aratruck">
+  <div class="stats-inner">
+    <div class="stat-item fade-up">
+      <div class="stat-num" data-count="15">0</div>
+      <div class="stat-label">Anos no mercado</div>
     </div>
-    <div class="benefit-list">
-      <div class="benefit-card fade-up">
-        <div class="b-icon">💪</div>
-        <div><h3>Pneus premium</h3><p>Bridgestone, Firestone e Dayton. Garantia de fábrica e estoque permanente para suas necessidades.</p></div>
+    <div class="stat-item fade-up d1">
+      <div class="stat-num" data-count="500" data-suffix="+">0</div>
+      <div class="stat-label">Clientes atendidos</div>
+    </div>
+    <div class="stat-item fade-up d2">
+      <div class="stat-num" data-count="3">0</div>
+      <div class="stat-label">Marcas premium</div>
+    </div>
+    <div class="stat-item fade-up d3">
+      <div class="stat-num" data-count="4">0</div>
+      <div class="stat-label">Serviços completos</div>
+    </div>
+  </div>
+</div>
+
+<!-- BRANDS BAR -->
+<div class="brands-bar" aria-label="Marcas parceiras">
+  <div class="brands-inner">
+    <span class="brands-label">Marcas que trabalhamos</span>
+    <div class="brands-list">
+      <span class="brand-name" title="Pneus Bridgestone">Bridgestone</span>
+      <div class="brand-divider" aria-hidden="true"></div>
+      <span class="brand-name" title="Pneus Firestone">Firestone</span>
+      <div class="brand-divider" aria-hidden="true"></div>
+      <span class="brand-name" title="Pneus Dayton">Dayton</span>
+      <div class="brand-divider" aria-hidden="true"></div>
+      <span class="brand-cert" aria-label="Recapagem Bandag certificada pelo Inmetro">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>
+        Bandag · Inmetro
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- SERVIÇOS -->
+<div class="sw-black">
+  <section id="serviços" class="section" aria-labelledby="servicos-title">
+    <div class="sec-head fade-up">
+      <span class="eyebrow">Nossos Serviços</span>
+      <h2 id="servicos-title">Soluções completas para sua frota</h2>
+      <p>Do pneu novo à gestão estratégica. Tudo integrado, tudo em um lugar.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card fade-up">
+        <div class="s-icon-wrap" aria-hidden="true">🛞</div>
+        <div>
+          <h3>Venda de Pneus Novos</h3>
+          <p>Bridgestone, Firestone, Dayton. Amplo estoque para todas as aplicações com garantia de fábrica e preços competitivos.</p>
+        </div>
+        <span class="service-tag">Estoque permanente</span>
       </div>
-      <div class="benefit-card fade-up d1">
-        <div class="b-icon">✅</div>
-        <div><h3>Recapagem certificada</h3><p>Processo Bandag com certificação Inmetro. Economia e sustentabilidade sem comprometer qualidade.</p></div>
+      <div class="service-card fade-up d1">
+        <div class="s-icon-wrap" aria-hidden="true">♻️</div>
+        <div>
+          <h3>Recapagem Bandag</h3>
+          <p>Processo certificado pelo Inmetro. Qualidade, economia e sustentabilidade. Estenda a vida útil dos pneus com segurança.</p>
+        </div>
+        <span class="service-tag">Certificado Inmetro</span>
       </div>
-      <div class="benefit-card fade-up d2">
-        <div class="b-icon">⚡</div>
-        <div><h3>Truck Center completo</h3><p>Alinhamento, balanceamento, montagem e desmontagem. Tudo em um só lugar. Sua frota não perde tempo.</p></div>
+      <div class="service-card fade-up d2">
+        <div class="s-icon-wrap" aria-hidden="true">🔧</div>
+        <div>
+          <h3>Truck Center</h3>
+          <p>Alinhamento, balanceamento, montagem e desmontagem. Serviço completo de borracharia — tudo em um só lugar para sua frota não parar.</p>
+        </div>
+        <span class="service-tag">Serviço completo</span>
       </div>
-      <div class="benefit-card fade-up d3">
-        <div class="b-icon">📊</div>
-        <div><h3>Gestão de pneus inteligente</h3><p>Consultoria técnica com relatórios e análises. Reduza custos e maximize performance da frota.</p></div>
+      <div class="service-card fade-up d3">
+        <div class="s-icon-wrap" aria-hidden="true">📊</div>
+        <div>
+          <h3>Gestão de Pneus</h3>
+          <p>Consultoria técnica com relatórios e análises detalhadas para reduzir custos e maximizar a performance da frota.</p>
+        </div>
+        <span class="service-tag">Consultoria técnica</span>
       </div>
     </div>
   </section>
 </div>
 
-<!-- SERVIÇOS -->
+<!-- BENEFITS -->
 <div class="sw-dark">
-  <section id="serviços" class="section">
+  <section aria-labelledby="benefits-title" class="section">
     <div class="sec-head fade-up">
-      <span class="badge">Nossos Serviços</span>
-      <h2>Soluções completas para sua frota</h2>
-      <p>Do pneu novo à gestão estratégica. Tudo integrado.</p>
+      <span class="eyebrow">Por que Aratruck</span>
+      <h2 id="benefits-title">Seu caminhão sempre pronto para a estrada</h2>
+      <p>Experiência comprovada, equipamentos de ponta e equipe especializada.</p>
     </div>
-    <div class="services-grid">
-      <div class="service-card fade-up">
-        <div class="s-icon">🛞</div>
-        <div><h3>Venda de Pneus Novos</h3><p>Bridgestone, Firestone, Dayton. Amplo estoque, garantia de fábrica, preços competitivos para todas aplicações.</p></div>
+    <div class="benefits-grid">
+      <div class="benefit-card fade-up">
+        <div class="b-icon" aria-hidden="true">💪</div>
+        <div><h3>Pneus premium sempre em estoque</h3><p>Bridgestone, Firestone e Dayton. Garantia de fábrica sem esperar. Sua frota não para por falta de produto.</p></div>
       </div>
-      <div class="service-card fade-up d1">
-        <div class="s-icon">♻️</div>
-        <div><h3>Recapagem Bandag</h3><p>Certificação Inmetro. Qualidade, economia e sustentabilidade. Estenda vida útil dos pneus com segurança.</p></div>
+      <div class="benefit-card fade-up d1">
+        <div class="b-icon" aria-hidden="true">🏆</div>
+        <div><h3>Recapagem com certificação</h3><p>Bandag com selo Inmetro. Economia real sem abrir mão da qualidade e segurança exigidas pelas estradas.</p></div>
       </div>
-      <div class="service-card fade-up d2">
-        <div class="s-icon">🔧</div>
-        <div><h3>Truck Center</h3><p>Alinhamento 3D, balanceamento, montagem, desmontagem. Serviço completo em um lugar. Sua frota não espera.</p></div>
+      <div class="benefit-card fade-up d2">
+        <div class="b-icon" aria-hidden="true">⚡</div>
+        <div><h3>Atendimento ágil e eficiente</h3><p>Equipamentos modernos e equipe especializada. Menos tempo parado, mais quilômetros rodados.</p></div>
       </div>
-      <div class="service-card fade-up d3">
-        <div class="s-icon">📈</div>
-        <div><h3>Gestão de Pneus</h3><p>Consultoria técnica, relatórios detalhados, análises de performance. Otimize custos e rendimento da frota.</p></div>
+      <div class="benefit-card fade-up d3">
+        <div class="b-icon" aria-hidden="true">📈</div>
+        <div><h3>Reduz custo da frota</h3><p>Consultoria e gestão inteligente de pneus. Dados reais para decisões que impactam diretamente o lucro da operação.</p></div>
       </div>
     </div>
   </section>
 </div>
 
 <!-- DIFERENCIAIS -->
-<div class="sw-gray">
-  <section id="diferenciais" class="section">
-    <div class="features-box fade-up">
-      <h2>Por que Aratruck é diferente</h2>
-      <p class="qt">"Tudo que sua frota precisa, com a qualidade e eficiência que você merece."</p>
-      <div class="features-cols">
-        <div>
-          <h3>Serviços Oferecidos</h3>
-          <div class="feat-item"><span class="feat-mark">●</span><p>Pneus novos: Bridgestone, Firestone, Dayton</p></div>
-          <div class="feat-item"><span class="feat-mark">●</span><p>Recapagem Bandag com certificação Inmetro</p></div>
-          <div class="feat-item"><span class="feat-mark">●</span><p>Alinhamento, balanceamento, montagem, desmontagem</p></div>
-          <div class="feat-item"><span class="feat-mark">●</span><p>Serviço de consultoria e gestão de pneus</p></div>
-          <div class="feat-item"><span class="feat-mark">●</span><p>Atendimento 24h para emergências</p></div>
+<div class="sw-black">
+  <section id="diferenciais" class="section" aria-labelledby="diff-title">
+    <div class="sec-head fade-up">
+      <span class="eyebrow">Diferenciais</span>
+      <h2 id="diff-title">Por que somos diferentes</h2>
+    </div>
+    <div class="diff-box fade-up d1">
+      <div class="diff-box-header">
+        <h2>"Tudo que sua frota precisa,<br>com quem entende do negócio."</h2>
+        <p>Qualidade, eficiência e confiabilidade em cada atendimento.</p>
+      </div>
+      <div class="diff-body">
+        <div class="diff-col">
+          <h3>Serviços disponíveis</h3>
+          <div class="diff-item">
+            <div class="diff-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>
+            </div>
+            <p>Pneus novos Bridgestone, Firestone, Dayton</p>
+          </div>
+          <div class="diff-item">
+            <div class="diff-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>
+            </div>
+            <p>Recapagem Bandag com certificação Inmetro</p>
+          </div>
+          <div class="diff-item">
+            <div class="diff-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>
+            </div>
+            <p>Alinhamento, balanceamento, montagem e desmontagem</p>
+          </div>
+          <div class="diff-item">
+            <div class="diff-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>
+            </div>
+            <p>Consultoria e gestão estratégica de pneus</p>
+          </div>
         </div>
-        <div>
-          <h3>Diferenciais</h3>
-          <div class="feat-item"><span class="feat-mark">✓</span><p>Estoque permanente de pneus premium</p></div>
-          <div class="feat-item"><span class="feat-mark">✓</span><p>Equipe especializada em veículos pesados</p></div>
-          <div class="feat-item"><span class="feat-mark">✓</span><p>Tecnologia e equipamento de última geração</p></div>
-          <div class="feat-item"><span class="feat-mark">✓</span><p>Preços competitivos e parcelamento disponível</p></div>
-          <div class="feat-item"><span class="feat-mark">✓</span><p>Suporte pós-venda e acompanhamento contínuo</p></div>
+        <div class="diff-col">
+          <h3>Nossos diferenciais</h3>
+          <div class="diff-item">
+            <div class="diff-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>
+            </div>
+            <p>Estoque permanente — sem aguardar pedido</p>
+          </div>
+          <div class="diff-item">
+            <div class="diff-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>
+            </div>
+            <p>Equipe especializada em veículos pesados</p>
+          </div>
+          <div class="diff-item">
+            <div class="diff-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>
+            </div>
+            <p>Equipamentos de última geração</p>
+          </div>
+          <div class="diff-item">
+            <div class="diff-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>
+            </div>
+            <p>Suporte pós-venda e acompanhamento contínuo</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 </div>
 
+<!-- HORÁRIOS + LOCALIZAÇÃO -->
+<div class="hours-wrap" id="contato" aria-labelledby="hours-title">
+  <div class="hours-inner">
+    <div>
+      <span class="eyebrow fade-up" style="margin-bottom:1.2rem; display:inline-flex;">Horário de Funcionamento</span>
+      <h2 class="hours-title fade-up d1" id="hours-title">Quando estamos prontos pra você</h2>
+      <p class="hours-sub fade-up d2">Atendemos sua frota de segunda a sábado. Chegue na hora certa.</p>
+      <table class="hours-table fade-up d3" aria-label="Tabela de horários">
+        <tbody>
+          <tr>
+            <td>Segunda–Sexta</td>
+            <td>08:00 – 17:00</td>
+            <td><span class="hours-open">● Aberto</span></td>
+          </tr>
+          <tr>
+            <td>Sábado</td>
+            <td>08:00 – 11:00</td>
+            <td><span class="hours-open">● Aberto</span></td>
+          </tr>
+          <tr>
+            <td>Domingo</td>
+            <td>—</td>
+            <td><span class="hours-closed">Fechado</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="fade-up d2">
+      <div class="location-card">
+        <h3>Localização</h3>
+        <div class="loc-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          <p><strong>Aratruck Comércio de Peças e Serviços</strong><br>R. Paul Harris, 340 — Jardim Anhanguera<br>Araras · SP · 13600-230</p>
+        </div>
+        <div class="loc-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <path d="M8 21h8M12 17v4"/>
+          </svg>
+          <p>CNPJ registrado · Nota fiscal em todos os serviços</p>
+        </div>
+        <a class="maps-btn" href="https://maps.google.com/?q=R.+Paul+Harris,+340,+Jardim+Anhanguera,+Araras,+SP,+13600-230" target="_blank" rel="noopener" aria-label="Abrir localização no Google Maps">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          Ver no Google Maps
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- CTA -->
-<div class="cta-wrap" id="contato">
+<div class="cta-wrap" aria-labelledby="cta-title">
   <div class="cta-inner fade-up">
-    <h2>Sua frota merece cuidado profissional</h2>
-    <p>Entre em contato agora mesmo. Solicite um orçamento ou tire suas dúvidas com nossos especialistas.</p>
+    <h2 id="cta-title">Sua frota merece o melhor atendimento</h2>
+    <p>Fale com nossos especialistas agora mesmo. Orçamento rápido, atendimento direto.</p>
     <div class="cta-btns">
-      <a href="https://wa.me/SEUWHATSAPP" target="_blank" rel="noopener" class="btn btn-primary">
-        Chamar no WhatsApp
+      <a href="https://wa.me/SEUWHATSAPP" target="_blank" rel="noopener" class="btn" style="background:rgba(0,0,0,.25);color:#fff;border:2px solid rgba(255,255,255,.4);" aria-label="Solicitar orçamento pelo WhatsApp">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.004 2C6.477 2 2 6.478 2 12.004c0 1.762.47 3.471 1.362 4.966L2 22l5.187-1.334A9.956 9.956 0 0 0 12.004 22C17.53 22 22 17.521 22 12.004 22 6.478 17.53 2 12.004 2z"/>
+        </svg>
+        WhatsApp
       </a>
-      <a href="tel:SEUTELEFONE" class="btn btn-outline">Ligar</a>
+      <a href="tel:SEUTELEFONE" class="btn" style="background:rgba(0,0,0,.15);color:#fff;border:2px solid rgba(255,255,255,.25);" aria-label="Ligar para Aratruck">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.77a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        Ligar
+      </a>
     </div>
   </div>
 </div>
 
 <!-- FOOTER -->
-<footer class="footer">
-  <h3>ARATRUCK</h3>
-  <p class="sp">Borracharia de Veículos Pesados</p>
-  <p class="cr">Aratruck Comércio de Peças e Serviços</p>
-  <div class="footer-divider"></div>
-  <p class="cp">
-    <strong>Horário de funcionamento:</strong><br>
-    Seg-Sex: 08:00–17:00 · Sab: 08:00–11:00 · Dom: Fechado<br>
-    <br>
-    <strong>Localização:</strong><br>
-    R. Paul Harris, 340 - Jardim Anhanguera<br>
-    Araras - SP, 13600-230<br>
-    <a href="https://maps.google.com/?q=R.+Paul+Harris,+340+-+Jardim+Anhanguera,+Araras+-+SP,+13600-230" target="_blank" style="color: var(--orange); text-decoration: underline;">Ver no Google Maps</a><br>
-    <br>
-    © 2025 Aratruck. Todos os direitos reservados.<br>
-    Qualidade, Eficiência, Confiabilidade
-  </p>
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo-row">
+        <div class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 24" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="8" width="22" height="12" rx="2" fill="white"/>
+            <path d="M23 12h5l3 5v3h-8V12z" fill="white"/>
+            <circle cx="8"  cy="22" r="3" fill="#cc5200"/>
+            <circle cx="18" cy="22" r="3" fill="#cc5200"/>
+            <circle cx="28" cy="22" r="3" fill="#cc5200"/>
+            <rect x="3" y="4" width="12" height="8" rx="1" fill="rgba(255,255,255,.5)"/>
+          </svg>
+        </div>
+        <div>
+          <div class="nm">ARATRUCK</div>
+          <div class="sub">Borracharia Pesada</div>
+        </div>
+      </div>
+      <p>Especialistas em pneus e serviços para veículos pesados em Araras-SP. Qualidade Bridgestone, Firestone e Dayton com recapagem Bandag certificada.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Links rápidos</h4>
+      <ul>
+        <li><a href="#início">Início</a></li>
+        <li><a href="#serviços">Serviços</a></li>
+        <li><a href="#diferenciais">Diferenciais</a></li>
+        <li><a href="#contato">Horários e Localização</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Serviços</h4>
+      <ul>
+        <li><a href="#serviços">Venda de Pneus Novos</a></li>
+        <li><a href="#serviços">Recapagem Bandag</a></li>
+        <li><a href="#serviços">Truck Center</a></li>
+        <li><a href="#serviços">Gestão de Pneus</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Aratruck Comércio de Peças e Serviços · Araras–SP · Todos os direitos reservados</p>
+  </div>
 </footer>
+</main>
 
 <script>
   // ── NAV ──
   const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 50), { passive: true });
 
-  let menuOpen = false;
+  const burger = document.getElementById('burger');
   const mobileMenu = document.getElementById('mobile-menu');
-  document.getElementById('burger').addEventListener('click', () => {
+  let menuOpen = false;
+  burger.addEventListener('click', () => {
     menuOpen = !menuOpen;
     mobileMenu.classList.toggle('open', menuOpen);
+    burger.setAttribute('aria-expanded', menuOpen);
   });
-  function closeMenu() { menuOpen = false; mobileMenu.classList.remove('open'); }
+  function closeMenu() {
+    menuOpen = false;
+    mobileMenu.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+  }
 
   // ── CAROUSEL ──
   const track  = document.getElementById('carousel-track');
@@ -577,19 +985,20 @@
 
   function goTo(n) {
     slides[cur].classList.remove('active');
+    dots[cur].classList.remove('active');
+    dots[cur].setAttribute('aria-selected', 'false');
     cur = ((n % total) + total) % total;
     slides[cur].classList.add('active');
+    dots[cur].classList.add('active');
+    dots[cur].setAttribute('aria-selected', 'true');
     track.style.transform = `translateX(-${cur * 100}%)`;
-    dots.forEach((d, i) => d.classList.toggle('active', i === cur));
   }
 
-  function nextSlide() { goTo(cur + 1); }
-  function prevSlide() { goTo(cur - 1); }
-  function startAuto() { autoTimer = setInterval(nextSlide, 6000); }
+  function startAuto() { autoTimer = setInterval(() => goTo(cur + 1), 6500); }
   function stopAuto()  { clearInterval(autoTimer); }
 
-  document.getElementById('c-prev').addEventListener('click', () => { stopAuto(); prevSlide(); startAuto(); });
-  document.getElementById('c-next').addEventListener('click', () => { stopAuto(); nextSlide(); startAuto(); });
+  document.getElementById('c-prev').addEventListener('click', () => { stopAuto(); goTo(cur - 1); startAuto(); });
+  document.getElementById('c-next').addEventListener('click', () => { stopAuto(); goTo(cur + 1); startAuto(); });
   dots.forEach(d => d.addEventListener('click', () => { stopAuto(); goTo(+d.dataset.idx); startAuto(); }));
 
   const carouselEl = document.getElementById('carousel');
@@ -600,18 +1009,38 @@
   carouselEl.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
   carouselEl.addEventListener('touchend', e => {
     const diff = touchX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 40) { stopAuto(); diff > 0 ? nextSlide() : prevSlide(); startAuto(); }
+    if (Math.abs(diff) > 40) { stopAuto(); goTo(diff > 0 ? cur + 1 : cur - 1); startAuto(); }
   }, { passive: true });
 
   startAuto();
 
+  // ── COUNTUP ANIMATION ──
+  function animateCount(el) {
+    const target = parseInt(el.dataset.count, 10);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1800;
+    const step = 16;
+    const increment = target / (duration / step);
+    let current = 0;
+    const timer = setInterval(() => {
+      current = Math.min(current + increment, target);
+      el.textContent = Math.floor(current) + suffix;
+      if (current >= target) clearInterval(timer);
+    }, step);
+  }
+
   // ── SCROLL ANIMATIONS ──
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        if (e.target.dataset.count) animateCount(e.target);
+        observer.unobserve(e.target);
+      }
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  }, { threshold: 0.15, rootMargin: '0px 0px -48px 0px' });
+
+  document.querySelectorAll('.fade-up, .fade-in, .stat-num').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
